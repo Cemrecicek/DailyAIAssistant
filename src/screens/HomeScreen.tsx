@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, ActivityIndicator, Alert } from 'react-native';
-import axios from 'axios';
-import { HF_TOKEN } from '@env';
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  StyleSheet,
+  ActivityIndicator,
+  Alert,
+} from "react-native";
 
-interface SentimentResult {
-  label: string;
-  score: number;
-}
-
-// 🚀 ÇALIŞAN MODEL (Router)
-const API_URL =
-  "https://router.huggingface.co/hf-inference/models/lxyuan/distilbert-base-multilingual-cased-sentiments-student";
+import { analyzeSentiment } from "../services/Service";
+import { SentimentResult } from "../services/Service";
 
 const HomeScreen = () => {
   const [text, setText] = useState("");
@@ -27,58 +27,10 @@ const HomeScreen = () => {
     setResult(null);
 
     try {
-      const response = await axios.post(
-        API_URL,
-        { inputs: text },
-        {
-          headers: {
-            Authorization: `Bearer ${HF_TOKEN}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      console.log("API Yanıtı:", response.data);
-
-      let predictions: SentimentResult[] = [];
-
-      // Router bazen [[{...}]] bazen [{...}] döndürür → İkisini de yakala
-      if (Array.isArray(response.data) && Array.isArray(response.data[0])) {
-        predictions = response.data[0];
-      } else if (Array.isArray(response.data)) {
-        predictions = response.data as SentimentResult[];
-      } else {
-        throw new Error("Beklenmeyen API yanıt formatı");
-      }
-
-      // En yüksek skoru seç
-      const best = predictions.reduce((a, b) =>
-        a.score > b.score ? a : b
-      );
-// --- 🎯 NÖTR EŞİK KONTROLÜ ---
-const positive = predictions.find(p => p.label.toLowerCase().includes("positive"));
-const negative = predictions.find(p => p.label.toLowerCase().includes("negative"));
-
-if (positive && negative) {
-  const diff = Math.abs(positive.score - negative.score);
-
-  console.log("Fark:", diff);
-
-  // Eğer skorlar birbirine çok yakınsa nötr kabul et (eşik: 0.15)
-  if (diff < 0.15) {
-    setResult({
-      label: "neutral",
-      score: Math.max(positive.score, negative.score), // en yüksek güveni kullan
-    });
-    return;
-  }
-}
-
-
-      setResult(best);
-
+      const prediction = await analyzeSentiment(text);
+      setResult(prediction);
     } catch (err: any) {
-      console.log("API Hatası:", err.response?.data || err.message);
+      console.log("Home Screen API Hatası:", err);
       Alert.alert("Hata", err.message || "API bağlantı hatası.");
     } finally {
       setLoading(false);
