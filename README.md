@@ -11,20 +11,20 @@ olanak tanır.
 
 ![Uygulama Önizleme](images/harikayım.gif)
 
-## 🚀 Özellikler
+##  Özellikler
 
--   🧠 **Duygu Analizi (Sentiment Analysis)**
--   ✨ **AI Öneri & Özet Üretimi**
--   📝 **Geçmiş Kaydı (History)**
--   📚 **Geçmiş Ekranı**
--   🗑️ **Geçmiş Silme**
--   🎨 **ResultCard & SuggestionCard Bileşenleri**
--   🧭 **React Navigation Entegrasyonu**
--   🔌 **Offline Çalışma (AsyncStorage ile geçmiş erişimi)**
+-    **Duygu Analizi (Sentiment Analysis)**
+-    **AI Öneri & Özet Üretimi**
+-    **Geçmiş Kaydı (History)**
+-    **Geçmiş Ekranı**
+-    **Geçmiş Silme**
+-    **ResultCard & SuggestionCard Bileşenleri**
+-    **React Navigation Entegrasyonu**
+-    **Offline Çalışma (AsyncStorage ile geçmiş erişimi)**
 
 ------------------------------------------------------------------------
 
-## 🛠 Kullanılan Teknolojiler
+##  Kullanılan Teknolojiler
 
 -   React Native\
 -   TypeScript\
@@ -36,7 +36,7 @@ olanak tanır.
 
 ------------------------------------------------------------------------
 
-## 🧠 AI Servisi Açıklaması
+##  AI Servisi Açıklaması
 
 Uygulama iki farklı AI sürecini kullanır:
 
@@ -64,7 +64,7 @@ API anahtarları `.env` dosyasından yönetilir.
 
 ------------------------------------------------------------------------
 
-## 🤖 AI Araç Kullanımı
+##  AI Araç Kullanımı
 
 Bu proje geliştirilirken zaman zaman **ChatGPT** ve **Google AI Studio** kullanılmıştır.  
 Tüm kod gözden geçirilmiş ve proje mimarisi manuel olarak düzenlenmiştir.
@@ -72,16 +72,16 @@ Tüm kod gözden geçirilmiş ve proje mimarisi manuel olarak düzenlenmiştir.
 
 ------------------------------------------------------------------------
 
-## 📸 Ekran Görüntüleri
+## Ekran Görüntüleri
 
-> **Buraya proje ekran görüntüleri daha sonra eklenecektir.**
 
-    ![HomeScreen](images/home.png)
-    ![HistoryScreen](images/history.png)
+
+    ![HomeScreen](images/harika.png)
+    ![HistoryScreen](images/yorgun.png.png)
 
 ------------------------------------------------------------------------
 
-## 📂 Proje Yapısı
+##  Proje Yapısı
 
     src/
      ├── assets/
@@ -125,7 +125,7 @@ Tüm kod gözden geçirilmiş ve proje mimarisi manuel olarak düzenlenmiştir.
 
 ------------------------------------------------------------------------
 
-## 🔑 Ortam Değişkenleri
+##  Ortam Değişkenleri
 
 Bir `.env` dosyası oluşturun:
 
@@ -136,16 +136,16 @@ Tüm API anahtarları yalnızca cihaz içinde tutulur.
 
 ------------------------------------------------------------------------
 
-## 📱 Ekranlar
+##  Ekranlar
 
-### 🏠 HomeScreen
+###  HomeScreen
 
 -   Duygu analizi\
 -   AI özet & öneri\
 -   Kart tabanlı sonuç gösterimi\
 -   Geçmiş ekranına yönlendirme
 
-### 📘 HistoryScreen
+###  HistoryScreen
 
 -   En güncel özet & öneri kartı\
 -   Tüm geçmiş listeleme\
@@ -153,7 +153,7 @@ Tüm API anahtarları yalnızca cihaz içinde tutulur.
 
 ------------------------------------------------------------------------
 
-## 💾 Kayıt Yapısı (HistoryItem)
+##  Kayıt Yapısı (HistoryItem)
 
 ``` ts
 interface HistoryItem {
