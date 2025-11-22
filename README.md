@@ -76,8 +76,9 @@ Tüm kod gözden geçirilmiş ve proje mimarisi manuel olarak düzenlenmiştir.
 
 
 
-    ![HomeScreen](images/harika.png)
-    ![HistoryScreen](images/yorgun.png.png)
+![HomeScreen](images/harika.png)
+
+![HistoryScreen](images/yorgun.png)
 
 ------------------------------------------------------------------------
 
