@@ -75,10 +75,9 @@ Tüm kod gözden geçirilmiş ve proje mimarisi manuel olarak düzenlenmiştir.
 ## Ekran Görüntüleri
 
 
+<img src="images/harika.png" width="250" />
+<img src="images/yorgun.png" width="250" />
 
-![HomeScreen](images/harika.png)
-
-![HistoryScreen](images/yorgun.png)
 
 ------------------------------------------------------------------------
 
