@@ -10,8 +10,10 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Home" component={HomeScreen} options={{ title: "Günlük Girdi" }} />
-        <Stack.Screen name="History" component={HistoryScreen} options={{ title: "Geçmiş" }} />
+        <Stack.Screen name="Home" component={HomeScreen} options={{ title: "AI Günlük Asistanım", headerTitleStyle: { color: "#3A6EA5", fontSize: 20, fontWeight: "bold", }, }} />
+
+        <Stack.Screen name="History" component={HistoryScreen} options={{ title: "Geçmiş", headerTitleStyle: { color: "#3A6EA5", fontSize: 20, }, }} />
+
       </Stack.Navigator>
     </NavigationContainer>
   );
