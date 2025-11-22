@@ -1,97 +1,173 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# 📘 AI Günlük Asistanım
 
-# Getting Started
+AI Günlük Asistanım, kullanıcıların günlük duygu durumlarını analiz
+eden, özetleyen ve kişiye özel öneriler sunan bir **React Native**
+uygulamasıdır. Yazdığınız metni yapay zekâ ile analiz eder, öneriler
+üretir ve geçmiş kayıtlarınızı saklayarak gelişiminizi takip etmenize
+olanak tanır.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+------------------------------------------------------------------------
+## Uygulama Demo
 
-## Step 1: Start Metro
+![Uygulama Önizleme](images/harikayım.gif)
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+## 🚀 Özellikler
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+-   🧠 **Duygu Analizi (Sentiment Analysis)**
+-   ✨ **AI Öneri & Özet Üretimi**
+-   📝 **Geçmiş Kaydı (History)**
+-   📚 **Geçmiş Ekranı**
+-   🗑️ **Geçmiş Silme**
+-   🎨 **ResultCard & SuggestionCard Bileşenleri**
+-   🧭 **React Navigation Entegrasyonu**
+-   🔌 **Offline Çalışma (AsyncStorage ile geçmiş erişimi)**
 
-```sh
-# Using npm
-npm start
+------------------------------------------------------------------------
 
-# OR using Yarn
-yarn start
+## 🛠 Kullanılan Teknolojiler
+
+-   React Native\
+-   TypeScript\
+-   React Navigation\
+-   AsyncStorage\
+-   react-native-uuid\
+-   react-native-vector-icons\
+-   HuggingFace / OpenAI tabanlı API servisleri
+
+------------------------------------------------------------------------
+
+## 🧠 AI Servisi Açıklaması
+
+Uygulama iki farklı AI sürecini kullanır:
+
+### **1. Duygu Analizi (Sentiment Analysis)**
+
+Kullanıcı metni, HuggingFace veya eşdeğer ücretsiz bir sentiment modeli
+üzerinden analiz edilerek:
+
+-   positive\
+-   neutral\
+-   negative
+
+etiketlerinden biri ile değerlendirilir.
+
+### **2. AI Öneri & Özet Üretimi**
+
+Kullanıcı metni ayrıca bir AI API'sine gönderilir (ör. OpenAI API / AI
+text generator).\
+Bu API aşağıdaki iki çıktıyı üretir:
+
+-   **Özet (summary)**\
+-   **Kişisel öneri (suggestion)**
+
+API anahtarları `.env` dosyasından yönetilir.
+
+------------------------------------------------------------------------
+
+## 🤖 AI Araç Kullanımı
+
+Bu proje geliştirilirken zaman zaman **ChatGPT** ve **Google AI Studio** kullanılmıştır.  
+Tüm kod gözden geçirilmiş ve proje mimarisi manuel olarak düzenlenmiştir.
+
+
+------------------------------------------------------------------------
+
+## 📸 Ekran Görüntüleri
+
+> **Buraya proje ekran görüntüleri daha sonra eklenecektir.**
+
+    ![HomeScreen](images/home.png)
+    ![HistoryScreen](images/history.png)
+
+------------------------------------------------------------------------
+
+## 📂 Proje Yapısı
+
+    src/
+     ├── assets/
+     │    ├── negatif.png
+     │    └── notr.png
+     │    └── pozitif.png
+     ├── components/
+     │    ├── ResultCard.tsx
+     │    └── SuggestionCard.tsx
+     │    └── AnalyzeCard.tsx
+     ├── screens/
+     │    ├── HomeScreen.tsx
+     │    └── HistoryScreen.tsx
+     ├── services/
+     │    ├── Service.ts
+     │    └── Recommend.ts
+     └── storage/
+          └── HistoryStrg.ts
+
+------------------------------------------------------------------------
+
+## ▶ Başlangıç
+
+### 1. Depoyu klonlayın
+
+    git clone https://github.com/kullanici/proje-adi.git
+    cd proje-adi
+
+### 2. Bağımlılıkları yükleyin
+
+    npm install
+
+### 3. iOS için (macOS)
+
+    cd ios && pod install && cd ..
+
+### 4. Uygulamayı başlatın
+
+    npm run android
+    npm run ios
+
+------------------------------------------------------------------------
+
+## 🔑 Ortam Değişkenleri
+
+Bir `.env` dosyası oluşturun:
+
+    OPENAI_API_KEY=YOUR_API_KEY
+    HF_API_KEY=YOUR_API_KEY
+
+Tüm API anahtarları yalnızca cihaz içinde tutulur.
+
+------------------------------------------------------------------------
+
+## 📱 Ekranlar
+
+### 🏠 HomeScreen
+
+-   Duygu analizi\
+-   AI özet & öneri\
+-   Kart tabanlı sonuç gösterimi\
+-   Geçmiş ekranına yönlendirme
+
+### 📘 HistoryScreen
+
+-   En güncel özet & öneri kartı\
+-   Tüm geçmiş listeleme\
+-   Temizleme butonu ile geçmişi silme
+
+------------------------------------------------------------------------
+
+## 💾 Kayıt Yapısı (HistoryItem)
+
+``` ts
+interface HistoryItem {
+  id: string;
+  text: string;
+  sentiment: string;
+  score: number;
+  date: string;
+  suggestion: string;
+  summary: string;
+}
 ```
 
-## Step 2: Build and run your app
+AsyncStorage sayesinde **internet olmadığında bile** geçmiş
+görüntülenebilir.
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
-
-### Android
-
-```sh
-# Using npm
-npm run android
-
-# OR using Yarn
-yarn android
-```
-
-### iOS
-
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
-
-```sh
-bundle install
-```
-
-Then, and every time you update your native dependencies, run:
-
-```sh
-bundle exec pod install
-```
-
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
-
-```sh
-# Using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
-```
-
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
-
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
-
-## Step 3: Modify your app
-
-Now that you have successfully run the app, let's make changes!
-
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
-
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
-
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+------------------------------------------------------------------------
