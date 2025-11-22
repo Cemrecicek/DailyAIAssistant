@@ -1,21 +1,37 @@
-import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  Button,
-  StyleSheet,
-  ActivityIndicator,
-  Alert,
-} from "react-native";
-
-import { analyzeSentiment } from "../services/Service";
-import { SentimentResult } from "../services/Service";
+import React, { useState, useEffect } from "react";
+import { View, Text, TextInput, Button, StyleSheet, ActivityIndicator, Alert, TouchableOpacity, } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import { analyzeSentiment, SentimentResult } from "../services/Service";
+import ResultCard from "../components/ResultCard";
+import SuggestionCard from "../components/SuggestionCard";
+import { addHistoryItem } from "../storage/HistoryStrg";
+import { fetchAISummaryAndSuggestion } from "../services/Recommend";
 
 const HomeScreen = () => {
   const [text, setText] = useState("");
   const [result, setResult] = useState<SentimentResult | null>(null);
   const [loading, setLoading] = useState(false);
+  const [summary, setSummary] = useState<string | null>(null);
+  const [suggestion, setSuggestion] = useState<string | null>(null);
+
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity
+          onPress={() => navigation.navigate("History" as never)}
+          style={{ marginRight: 10, flexDirection: "row", alignItems: "center" }}
+        >
+          <Ionicons name="book-outline" size={22} color="#3A6EA5" />
+          <Text style={{ color: "#3A6EA5", fontSize: 15, marginLeft: 5}}>
+            Geçmiş
+          </Text>
+        </TouchableOpacity>
+      ),
+    });
+  }, []);
 
   const analyze = async () => {
     if (!text.trim()) {
@@ -25,35 +41,49 @@ const HomeScreen = () => {
 
     setLoading(true);
     setResult(null);
+    setSummary(null);
+    setSuggestion(null);
 
     try {
+      console.log("=== SENTIMENT BAŞLIYOR ===");
       const prediction = await analyzeSentiment(text);
+      console.log("=== SENTIMENT OK ===", prediction);
+
       setResult(prediction);
+
+      console.log("=== AI ÖNERİ BAŞLIYOR ===");
+      const ai = await fetchAISummaryAndSuggestion(text);
+      console.log("=== AI ÖNERİ TAM ===", ai);
+
+      setSummary(ai.summary);
+      setSuggestion(ai.suggestion);
+
+      console.log("=== KAYDETME BAŞLIYOR ===");
+      await addHistoryItem(
+        text,
+        prediction.label,
+        prediction.score,
+        ai.suggestion,
+        ai.summary
+      );
+      console.log("=== KAYDETME TAM ===");
+
     } catch (err: any) {
-      console.log("Home Screen API Hatası:", err);
-      Alert.alert("Hata", err.message || "API bağlantı hatası.");
+      console.log("❌ HomeScreen ERROR:", err);
+      Alert.alert("Hata", err.message);
     } finally {
       setLoading(false);
     }
   };
 
-  const getLabel = (label: string) => {
-    const l = label.toLowerCase();
-    if (l.includes("positive")) return "😊 Olumlu";
-    if (l.includes("negative")) return "😡 Olumsuz";
-    return "😐 Nötr";
-  };
-
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>AI Günlük Asistanım</Text>
-
       <TextInput
         style={styles.input}
         placeholder="Bugün kendini nasıl hissediyorsun?"
+        multiline
         value={text}
         onChangeText={setText}
-        multiline
       />
 
       {loading ? (
@@ -62,13 +92,10 @@ const HomeScreen = () => {
         <Button title="Analiz Et" onPress={analyze} />
       )}
 
-      {result && (
-        <View style={styles.result}>
-          <Text style={styles.resultLabel}>{getLabel(result.label)}</Text>
-          <Text style={styles.resultScore}>
-            Güven: %{(result.score * 100).toFixed(1)}
-          </Text>
-        </View>
+      {result && <ResultCard label={result.label} score={result.score} />}
+
+      {summary && suggestion && (
+        <SuggestionCard summary={summary} suggestion={suggestion} />
       )}
     </View>
   );
@@ -86,14 +113,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     textAlignVertical: "top",
   },
-  result: {
-    marginTop: 20,
-    padding: 15,
-    backgroundColor: "#f1f1f1",
-    borderRadius: 10,
-  },
-  resultLabel: { fontSize: 20, fontWeight: "bold" },
-  resultScore: { marginTop: 5, fontSize: 14, color: "#333" },
 });
 
 export default HomeScreen;
