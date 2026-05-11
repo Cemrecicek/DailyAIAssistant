@@ -1,161 +1,154 @@
-# 📘 AI Günlük Asistanım
+# 📘 AI Daily Assistant
 
-AI Günlük Asistanım, kullanıcıların günlük duygu durumlarını analiz
-eden, özetleyen ve kişiye özel öneriler sunan bir **React Native**
-uygulamasıdır. Yazdığınız metni yapay zekâ ile analiz eder, öneriler
-üretir ve geçmiş kayıtlarınızı saklayarak gelişiminizi takip etmenize
-olanak tanır.
+AI Daily Assistant is a React Native application that analyzes users’ daily emotional states, summarizes their journal entries, and provides personalized AI-powered suggestions. It helps users track their emotional progress by storing past records and offering meaningful feedback.
 
-------------------------------------------------------------------------
-## Uygulama Demo
+---
 
-![Uygulama Önizleme](images/harikayım.gif)
+## Application Demo
 
-##  Özellikler
+![App Preview](images/harikayım.gif)
 
--    **Duygu Analizi (Sentiment Analysis)**
--    **AI Öneri & Özet Üretimi**
--    **Geçmiş Kaydı (History)**
--    **Geçmiş Ekranı**
--    **Geçmiş Silme**
--    **ResultCard & SuggestionCard Bileşenleri**
--    **React Navigation Entegrasyonu**
--    **Offline Çalışma (AsyncStorage ile geçmiş erişimi)**
+## Features
 
-------------------------------------------------------------------------
+- Sentiment Analysis
+- AI-generated Suggestions & Summaries
+- History Tracking
+- History Screen
+- Delete History
+- ResultCard & SuggestionCard Components
+- React Navigation Integration
+- Offline Support (history access with AsyncStorage)
 
-##  Kullanılan Teknolojiler
+---
 
--   React Native\
--   TypeScript\
--   React Navigation\
--   AsyncStorage\
--   react-native-uuid\
--   react-native-vector-icons\
--   HuggingFace / OpenAI tabanlı API servisleri
+## Technologies Used
 
-------------------------------------------------------------------------
+- React Native
+- TypeScript
+- React Navigation
+- AsyncStorage
+- react-native-uuid
+- react-native-vector-icons
+- HuggingFace API
+- Google Gemini API
 
-##  AI Servisi Açıklaması
+---
 
-Uygulama iki farklı AI sürecini kullanır:
+## AI Service Architecture
 
-### **1. Duygu Analizi (Sentiment Analysis)**
+The application uses two AI-powered processes:
 
-Kullanıcı metni, HuggingFace veya eşdeğer ücretsiz bir sentiment modeli
-üzerinden analiz edilerek:
+### 1. Sentiment Analysis
 
--   positive\
--   neutral\
--   negative
+User journal input is analyzed using a sentiment analysis model and classified as:
 
-etiketlerinden biri ile değerlendirilir.
+- positive
+- neutral
+- negative
 
-### **2. AI Öneri & Özet Üretimi**
+### 2. AI Summary & Recommendation Generation
 
-Kullanıcı metni ayrıca bir AI API'sine gönderilir (ör. OpenAI API / AI
-text generator).\
-Bu API aşağıdaki iki çıktıyı üretir:
+The user input is also sent to an AI text generation API to produce:
 
--   **Özet (summary)**\
--   **Kişisel öneri (suggestion)**
+- Summary
+- Personalized suggestion
 
-API anahtarları `.env` dosyasından yönetilir.
+API keys are managed using `.env` configuration.
 
-------------------------------------------------------------------------
+---
 
-##  AI Araç Kullanımı
-
-Bu proje geliştirilirken zaman zaman **ChatGPT** ve **Google AI Studio** kullanılmıştır.  
-Tüm kod gözden geçirilmiş ve proje mimarisi manuel olarak düzenlenmiştir.
-
-
-------------------------------------------------------------------------
-
-## Ekran Görüntüleri
-
+## Screenshots
 
 <img src="images/harika.png" width="250" />
 <img src="images/yorgun.png" width="250" />
 
+---
 
-------------------------------------------------------------------------
+## Project Structure
 
-##  Proje Yapısı
+```text
+src/
+ ├── assets/
+ │    ├── negatif.png
+ │    ├── notr.png
+ │    └── pozitif.png
+ ├── components/
+ │    ├── ResultCard.tsx
+ │    ├── SuggestionCard.tsx
+ │    └── AnalyzeCard.tsx
+ ├── screens/
+ │    ├── HomeScreen.tsx
+ │    └── HistoryScreen.tsx
+ ├── services/
+ │    ├── Service.ts
+ │    └── Recommend.ts
+ └── storage/
+      └── HistoryStrg.ts
+```
 
-    src/
-     ├── assets/
-     │    ├── negatif.png
-     │    └── notr.png
-     │    └── pozitif.png
-     ├── components/
-     │    ├── ResultCard.tsx
-     │    └── SuggestionCard.tsx
-     │    └── AnalyzeCard.tsx
-     ├── screens/
-     │    ├── HomeScreen.tsx
-     │    └── HistoryScreen.tsx
-     ├── services/
-     │    ├── Service.ts
-     │    └── Recommend.ts
-     └── storage/
-          └── HistoryStrg.ts
+---
 
-------------------------------------------------------------------------
+## Installation
 
-## ▶ Başlangıç
+### 1. Clone the repository
 
-### 1. Depoyu klonlayın
+```bash
+git clone https://github.com/Cemrecicek/DailyAIAssistant.git
+cd DailyAIAssistant
+```
 
-    git clone https://github.com/kullanici/proje-adi.git
-    cd proje-adi
+### 2. Install dependencies
 
-### 2. Bağımlılıkları yükleyin
+```bash
+npm install
+```
 
-    npm install
+### 3. iOS setup (macOS only)
 
-### 3. iOS için (macOS)
+```bash
+cd ios && pod install && cd ..
+```
 
-    cd ios && pod install && cd ..
+### 4. Run the application
 
-### 4. Uygulamayı başlatın
+```bash
+npm run android
+npm run ios
+```
 
-    npm run android
-    npm run ios
+---
 
-------------------------------------------------------------------------
+## Environment Variables
 
-##  Ortam Değişkenleri
+Create a `.env` file:
 
-Bir `.env` dosyası oluşturun:
+```env
+OPENAI_API_KEY=YOUR_API_KEY
+HF_API_KEY=YOUR_API_KEY
+```
 
-    OPENAI_API_KEY=YOUR_API_KEY
-    HF_API_KEY=YOUR_API_KEY
+---
 
-Tüm API anahtarları yalnızca cihaz içinde tutulur.
+## Screens
 
-------------------------------------------------------------------------
+### HomeScreen
 
-##  Ekranlar
+- Sentiment analysis
+- AI-generated summary & suggestions
+- Card-based result display
+- Navigation to history screen
 
-###  HomeScreen
+### HistoryScreen
 
--   Duygu analizi\
--   AI özet & öneri\
--   Kart tabanlı sonuç gösterimi\
--   Geçmiş ekranına yönlendirme
+- Latest summary & suggestion cards
+- Full history listing
+- Clear history functionality
 
-###  HistoryScreen
+---
 
--   En güncel özet & öneri kartı\
--   Tüm geçmiş listeleme\
--   Temizleme butonu ile geçmişi silme
+## Data Model (HistoryItem)
 
-------------------------------------------------------------------------
-
-##  Kayıt Yapısı (HistoryItem)
-
-``` ts
+```ts
 interface HistoryItem {
   id: string;
   text: string;
@@ -167,7 +160,4 @@ interface HistoryItem {
 }
 ```
 
-AsyncStorage sayesinde **internet olmadığında bile** geçmiş
-görüntülenebilir.
-
-------------------------------------------------------------------------
+Thanks to AsyncStorage, users can access their saved history even without an internet connection.
